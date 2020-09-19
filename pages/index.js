@@ -3,7 +3,17 @@ import Link from 'next/link';
 import Layout, {siteTitle} from '../components/layout';
 import utilStyles from '../styles/utils.module.css';
 
-export default function Home() {
+export async function getStaticProps() {
+    const res = await fetch('http://cms:1337/projects');
+    const projects = await res.json();
+    return {
+        props: {
+            projects
+        }
+    };
+}
+
+export default function Home({ projects }) {
     return (
         <Layout home>
             <Head>
@@ -21,6 +31,16 @@ export default function Home() {
                     Also I have deployed and managed apps on cloud computing platforms with
                     providers like Amazon, DigitalOcean, and Rackspace Cloud Computing.
                 </p>
+            </section>
+            <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+                <h2 className={utilStyles.headingLg}>Projects</h2>
+                <ul className={utilStyles.list}>
+                    {projects.map(({ id, title }) => (
+                        <li className={utilStyles.listItem} key={id}>
+                            {title}
+                        </li>
+                    ))}
+                </ul>
             </section>
         </Layout>
     )
