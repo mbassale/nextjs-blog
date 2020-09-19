@@ -35,9 +35,10 @@ export default function Home({ projects }) {
             <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
                 <h2 className={utilStyles.headingLg}>Projects</h2>
                 <ul className={utilStyles.list}>
-                    {projects.map(({ id, title }) => (
+                    {projects.map(({ id, title, summary }) => (
                         <li className={utilStyles.listItem} key={id}>
-                            {title}
+                            <Link href={`/projects/${id}`}><a>{title}</a></Link><br />
+                            {summary}
                         </li>
                     ))}
                 </ul>
