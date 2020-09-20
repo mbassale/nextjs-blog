@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link';
 import Layout, {siteTitle} from '../components/layout';
+import Grid from '@material-ui/core/Grid';
+import Project from "../components/project";
 import utilStyles from '../styles/utils.module.css';
 
 export async function getStaticProps() {
@@ -34,14 +36,13 @@ export default function Home({ projects }) {
             </section>
             <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
                 <h2 className={utilStyles.headingLg}>Projects</h2>
-                <ul className={utilStyles.list}>
-                    {projects.map(({ id, title, summary }) => (
-                        <li className={utilStyles.listItem} key={id}>
-                            <Link href={`/projects/${id}`}><a>{title}</a></Link><br />
-                            {summary}
-                        </li>
+                <Grid container spacing={3} direction="row" justify="center">
+                    {projects.map(project => (
+                        <Grid key={project.id} item xs={12} md={6} lg={4}>
+                            <Project project={project} />
+                        </Grid>
                     ))}
-                </ul>
+                </Grid>
             </section>
         </Layout>
     )

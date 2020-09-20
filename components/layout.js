@@ -4,41 +4,13 @@ import Link from 'next/link';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import {Typography} from "@material-ui/core";
+import classes from './layout.module.css';
 
 const name = 'Marco Bassaletti';
 export const siteTitle = 'Marco Bassaletti Personal Blog';
 
-const useStyles = makeStyles((theme) => ({
-    header: {
-        marginTop: '2rem'
-    },
-    headerImage: {
-        width: '8rem',
-        height: '8rem',
-        margin: '0 auto',
-        borderRadius: '9999px'
-    },
-    backToHome: {
-        width: '100%',
-        textAlign: 'left',
-        margin: '3rem 0 0'
-    },
-    footer: {
-        width: '100%',
-        textAlign: 'center',
-        borderTop: 'darkblue 1px solid',
-        paddingTop: '1.5rem !important',
-        paddingLeft: '12px',
-        paddingRight: '12px',
-        marginTop: '1rem',
-        marginBottom: '1rem'
-    }
-}));
-
 function Layout({ children, home }) {
-    const classes = useStyles();
     return (
         <React.Fragment>
             <Head>
