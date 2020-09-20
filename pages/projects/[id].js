@@ -1,9 +1,50 @@
+import * as React from 'react';
 import Layout from '../../components/layout';
 import Head from 'next/head';
 import remark from 'remark';
 import html from 'remark-html';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import Link from '@material-ui/core/Link';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import LinkIcon from '@material-ui/icons/Link';
+import PasswordIcon from '@material-ui/icons/CardMembership';
+import ProjectImage from '../../components/ProjectImage';
+import classes from './[id].module.css';
 
 export default function Project({ project, descriptionHtml }) {
+
+    const repositoryListItem = project.repository_url ? (
+        <ListItem button component={Link} href={project.repository_url} target="_blank">
+            <ListItemIcon>
+                <LinkIcon />
+            </ListItemIcon>
+            <ListItemText primary="Github Repository" secondary={project.repository_url} />
+        </ListItem>
+    ) : null;
+
+    const projectListItem = project.project_url ? (
+        <ListItem button component={Link} href={project.project_url} target="_blank">
+            <ListItemIcon>
+                <LinkIcon />
+            </ListItemIcon>
+            <ListItemText primary="Project" secondary={project.project_url} />
+        </ListItem>
+    ) : null;
+
+    const credentialsListItem = project.credential ? (
+        <ListItem button component={Link} href={project.project_url} target="_blank">
+            <ListItemIcon>
+                <PasswordIcon />
+            </ListItemIcon>
+            <ListItemText primary="Credentials" secondary={`Email: ${project.credential.email} Password: ${project.credential.password}`} />
+        </ListItem>
+    ) : null;
+
     return (
         <Layout>
             <Head>
@@ -11,6 +52,19 @@ export default function Project({ project, descriptionHtml }) {
             </Head>
             <h3>{ project.title }</h3>
             <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
+            <List component="nav" aria-label="main mailbox folders">
+                {repositoryListItem}
+                {projectListItem}
+                {credentialsListItem}
+            </List>
+            {project.images.length > 0 ? (
+                <GridList cellHeight={400} className={classes.gridList} cols={2}>
+                    <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+                        <ListSubheader component="div">Screenshots</ListSubheader>
+                    </GridListTile>
+                    {project.images.map((image) => <GridListTile key={image.id} cols={1}><ProjectImage image={image} /></GridListTile>)}
+                </GridList>
+                ) : null }
         </Layout>
     );
 }
