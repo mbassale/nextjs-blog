@@ -42,7 +42,7 @@ export default function FullScreenDialog({ image, open, onClose, onNextImage, on
         imageElement = (
             <Grid container spacing={0} direction="row" justify="space-around" alignItems="stretch" className={classes.content}>
                 <Grid item className={classes.navigationColumn}>
-                    <ButtonBase className={classes.navigationButton} onClick={onPreviousImage}>
+                    <ButtonBase className={classes.navigationButton} disableTouchRipple={true} onClick={onPreviousImage}>
                         <LeftIcon fontSize="large" />
                     </ButtonBase>
                 </Grid>
@@ -50,7 +50,7 @@ export default function FullScreenDialog({ image, open, onClose, onNextImage, on
                     <img className={classes.image} src={imageUrl} alt={image.caption} />
                 </Grid>
                 <Grid item className={classes.navigationColumn}>
-                    <ButtonBase className={classes.navigationButton} onClick={onNextImage}>
+                    <ButtonBase className={classes.navigationButton} disableTouchRipple={true} onClick={onNextImage}>
                         <RightIcon fontSize="large" />
                     </ButtonBase>
                 </Grid>
