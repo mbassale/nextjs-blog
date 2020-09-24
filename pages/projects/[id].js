@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Layout from '../../components/layout';
 import Head from 'next/head';
 import remark from 'remark';
@@ -14,9 +14,50 @@ import ListItemText from '@material-ui/core/ListItemText';
 import LinkIcon from '@material-ui/icons/Link';
 import PasswordIcon from '@material-ui/icons/CardMembership';
 import ProjectImage from '../../components/ProjectImage';
+import ProjectImageDialog from '../../components/ProjectImageDialog';
 import classes from './[id].module.css';
 
 export default function Project({ project, descriptionHtml }) {
+
+    const [showImageDialog, setShowImageDialog] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const getSelectedImageIndex = () => {
+        if (selectedImage && project.images && project.images.length > 0) {
+            return project.images.findIndex(image => image.id === selectedImage.id);
+        }
+    }
+
+    const handleImageClick = (image) => {
+        setSelectedImage(image);
+        setShowImageDialog(true);
+    };
+
+    const handleImageDialogClose = () => {
+        setShowImageDialog(false);
+    }
+
+    const handleNextImage = () => {
+        const selectedImageIndex = getSelectedImageIndex();
+        if (selectedImageIndex >= 0) {
+            let nextImageIndex = selectedImageIndex + 1;
+            if (nextImageIndex >= project.images.length) {
+                nextImageIndex = 0;
+            }
+            setSelectedImage(project.images[nextImageIndex]);
+        }
+    };
+
+    const handlePreviousImage = () => {
+        const selectedImageIndex = getSelectedImageIndex();
+        if (selectedImageIndex >= 0) {
+            let previousImageIndex = selectedImageIndex - 1;
+            if (previousImageIndex < 0) {
+                previousImageIndex = project.images.length - 1;
+            }
+            setSelectedImage(project.images[previousImageIndex]);
+        }
+    };
 
     const repositoryListItem = project.repository_url ? (
         <ListItem button component={Link} href={project.repository_url} target="_blank">
@@ -62,9 +103,14 @@ export default function Project({ project, descriptionHtml }) {
                     <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
                         <ListSubheader component="div">Screenshots</ListSubheader>
                     </GridListTile>
-                    {project.images.map((image) => <GridListTile key={image.id} cols={1}><ProjectImage image={image} /></GridListTile>)}
+                    {project.images.map((image) =>
+                        <GridListTile key={image.id} cols={1}>
+                            <ProjectImage image={image} onClick={() => handleImageClick(image)} />
+                        </GridListTile>)}
                 </GridList>
                 ) : null }
+            <ProjectImageDialog image={selectedImage} open={showImageDialog} onClose={handleImageDialogClose}
+                                onNextImage={handleNextImage} onPreviousImage={handlePreviousImage} />
         </Layout>
     );
 }
