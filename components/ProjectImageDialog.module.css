@@ -9,27 +9,52 @@
 
 .image {
     display: block;
-    margin: 0 auto;
     width: auto;
-    max-width: 100%;
 }
 
 .content {
-    height: 100% !important;
+    position: relative;
+    display: block;
+    margin: 0 auto;
 }
 
-.navigationColumn {
-    flex-grow: 1 !important;
+.navigationColumnLeft {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 40%;
+}
+
+.navigationColumnRight {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 40%;
 }
 
 .navigationButton {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
     cursor: pointer;
 }
-.navigationButton:hover {
-    background-color: rgba(0, 0, 0, 0.25);
+
+.leftNavigationButton:hover {
+    background: linear-gradient(-90deg, transparent, rgba(0, 0, 0, 0.5));
+}
+
+.leftNavigationIcon {
+    position: absolute !important;
+    font-size: 4rem !important;
+    left: 2rem !important;
+}
+
+.rightNavigationButton:hover {
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.5));
+}
+
+.rightNavigationIcon {
+    position: absolute !important;
+    font-size: 4rem !important;
+    right: 2rem !important;
 }

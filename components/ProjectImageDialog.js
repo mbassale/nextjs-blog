@@ -40,21 +40,19 @@ export default function FullScreenDialog({ image, open, onClose, onNextImage, on
     if (image && image.formats) {
         const imageUrl = 'http://localhost:1337' + image.formats.large.url;
         imageElement = (
-            <Grid container spacing={0} direction="row" justify="space-around" alignItems="stretch" className={classes.content}>
-                <Grid item className={classes.navigationColumn}>
-                    <ButtonBase className={classes.navigationButton} disableTouchRipple={true} onClick={onPreviousImage}>
-                        <LeftIcon fontSize="large" />
+            <div className={classes.content}>
+                <div className={classes.navigationColumnLeft}>
+                    <ButtonBase className={[classes.navigationButton, classes.leftNavigationButton].join(' ')} disableTouchRipple={true} onClick={handlePreviousImage}>
+                        <LeftIcon className={classes.leftNavigationIcon} />
                     </ButtonBase>
-                </Grid>
-                <Grid item>
-                    <img className={classes.image} src={imageUrl} alt={image.caption} />
-                </Grid>
-                <Grid item className={classes.navigationColumn}>
-                    <ButtonBase className={classes.navigationButton} disableTouchRipple={true} onClick={onNextImage}>
-                        <RightIcon fontSize="large" />
+                </div>
+                <img className={classes.image} src={imageUrl} alt={image.caption} />
+                <div className={classes.navigationColumnRight}>
+                    <ButtonBase className={[classes.navigationButton, classes.rightNavigationButton].join(' ')} disableTouchRipple={true} onClick={handleNextImage}>
+                        <RightIcon className={classes.rightNavigationIcon} />
                     </ButtonBase>
-                </Grid>
-            </Grid>
+                </div>
+            </div>
         );
     }
 
