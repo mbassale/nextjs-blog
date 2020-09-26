@@ -7,15 +7,12 @@ import Grid from '@material-ui/core/Grid';
 import {Typography} from "@material-ui/core";
 import classes from './layout.module.css';
 
-const name = 'Marco Bassaletti';
-export const siteTitle = 'Marco Bassaletti Personal Blog';
-
-function Layout({ children, home }) {
+function Layout({ children, home, siteTitle, siteDescription }) {
     return (
         <React.Fragment>
             <Head>
                 <link rel="icon" href="/favicon.ico" />
-                <meta name="description" content="Marco Bassaletti personal blog in Next.js" />
+                <meta name="description" content={siteDescription} />
                 <meta name="og:title" content={siteTitle} />
             </Head>
             <CssBaseline />
@@ -25,9 +22,9 @@ function Layout({ children, home }) {
                         <img
                             src="/images/profile.jpg"
                             className={classes.headerImage}
-                            alt={name}
+                            alt={siteTitle}
                         />
-                        <Typography variant="h3" component="h1">{name}</Typography>
+                        <Typography variant="h3" component="h1">{siteTitle}</Typography>
                     </Grid>
                     <Grid item xs={12}>{children}</Grid>
                     {!home && (
