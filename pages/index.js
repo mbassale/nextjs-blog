@@ -12,28 +12,37 @@ import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 import remark from "remark";
 import html from "remark-html";
+import Certification from "../components/Certification";
 
 export async function getStaticProps() {
     // get projects
-    const res = await fetch('http://cms:1337/projects');
+    const res = await fetch('http://localhost:1337/projects');
     const projects = await res.json();
 
     // get profile data
-    const res2 = await fetch('http://cms:1337/profiles/1');
+    const res2 = await fetch('http://localhost:1337/profiles/1');
     const profile = await res2.json();
     const description = await remark().use(html).process(profile.description)
     const descriptionHtml = description.toString();
+
+    const res3 = await fetch('http://localhost:1337/certifications');
+    const certifications = await res3.json();
+
+    const res4 = await fetch('http://localhost:1337/courses');
+    const courses = await res4.json();
 
     return {
         props: {
             profile,
             profileDescriptionHtml: descriptionHtml,
-            projects
+            projects,
+            certifications,
+            courses
         }
     };
 }
 
-export default function Home({ profile, profileDescriptionHtml, projects }) {
+export default function Home({ profile, profileDescriptionHtml, projects, certifications, courses }) {
     const siteTitle = `${profile.first_name} ${profile.last_name}`;
     return (
         <Layout home siteTitle={siteTitle} siteDescription={profile.description}>
@@ -70,9 +79,9 @@ export default function Home({ profile, profileDescriptionHtml, projects }) {
             <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
                 <h2 className={utilStyles.headingLg}>Certifications</h2>
                 <Grid container spacing={3} direction="row" justify="center">
-                    {projects.map(project => (
-                        <Grid key={project.id} item xs={12} md={6} lg={4}>
-                            <Project project={project} />
+                    {certifications.map(certification => (
+                        <Grid key={certification.id} item xs={12} md={6} lg={4}>
+                            <Certification certification={certification} />
                         </Grid>
                     ))}
                 </Grid>

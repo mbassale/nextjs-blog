@@ -1,0 +1,12 @@
+
+.root {
+    min-width: 275px;
+}
+
+.actions {
+    padding-left: 16px !important;
+}
+
+.link {
+    font-size: 16px;
+}
