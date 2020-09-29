@@ -1,6 +1,6 @@
 import React from "react";
 import Head from 'next/head';
-import Layout, {siteTitle} from '../components/layout';
+import Layout from '../components/layout';
 import Grid from '@material-ui/core/Grid';
 import Project from "../components/project";
 import utilStyles from '../styles/utils.module.css';
@@ -13,6 +13,7 @@ import List from "@material-ui/core/List";
 import remark from "remark";
 import html from "remark-html";
 import Certification from "../components/Certification";
+import Course from "../components/Course";
 
 export async function getStaticProps() {
     // get projects
@@ -89,9 +90,9 @@ export default function Home({ profile, profileDescriptionHtml, projects, certif
             <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
                 <h2 className={utilStyles.headingLg}>Courses</h2>
                 <Grid container spacing={3} direction="row" justify="center">
-                    {projects.map(project => (
-                        <Grid key={project.id} item xs={12} md={6} lg={4}>
-                            <Project project={project} />
+                    {courses.map(course => (
+                        <Grid key={course.id} item xs={12} md={6} lg={4}>
+                            <Course course={course} />
                         </Grid>
                     ))}
                 </Grid>
