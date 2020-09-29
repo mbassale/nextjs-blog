@@ -16,7 +16,7 @@ function Layout({ children, home, siteTitle, siteDescription }) {
                 <meta name="og:title" content={siteTitle} />
             </Head>
             <CssBaseline />
-            <Container fixed>
+            <Container maxWidth="lg">
                 <Grid container spacing={3} direction="column" justify="flex-start" alignItems="center">
                     <Grid item xs={12} className={classes.header}>
                         <img
