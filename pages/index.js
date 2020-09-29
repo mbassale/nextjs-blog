@@ -63,14 +63,14 @@ export default function Home({ profile, profileDescriptionHtml, projects, certif
                             <ListItemIcon>
                                 <LinkIcon />
                             </ListItemIcon>
-                            <ListItemText primary={profileLink.title} secondary={profileLink.url} />
+                            <ListItemText className={utilStyles.profileLink} primary={profileLink.title} secondary={profileLink.url} />
                         </ListItem>
                     ))}
                 </List>
             </section>
             <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
                 <h2 className={utilStyles.headingLg}>Projects</h2>
-                <Grid container spacing={3} direction="row" justify="center">
+                <Grid container spacing={3} direction="row" justify="center" alignItems="stretch">
                     {projects.map(project => (
                         <Grid key={project.id} item xs={12} md={6} lg={4}>
                             <Project project={project} />
@@ -80,7 +80,7 @@ export default function Home({ profile, profileDescriptionHtml, projects, certif
             </section>
             <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
                 <h2 className={utilStyles.headingLg}>Certifications</h2>
-                <Grid container spacing={3} direction="row" justify="center">
+                <Grid container spacing={3} direction="row" justify="center" alignItems="stretch">
                     {certifications.map(certification => (
                         <Grid key={certification.id} item xs={12} md={6} lg={4}>
                             <Certification certification={certification} />
@@ -90,7 +90,7 @@ export default function Home({ profile, profileDescriptionHtml, projects, certif
             </section>
             <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
                 <h2 className={utilStyles.headingLg}>Courses</h2>
-                <Grid container spacing={3} direction="row" justify="center">
+                <Grid container spacing={3} direction="row" justify="center" alignItems="stretch">
                     {courses.map(course => (
                         <Grid key={course.id} item xs={12} md={6} lg={4}>
                             <Course course={course} />

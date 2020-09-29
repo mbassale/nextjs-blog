@@ -58,3 +58,7 @@
 .textJustify {
     text-align: justify;
 }
+
+.profileLink {
+    overflow-wrap: anywhere;
+}
