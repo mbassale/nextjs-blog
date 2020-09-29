@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from "react";
 import Head from 'next/head';
 import Layout from '../components/layout';
@@ -26,11 +27,11 @@ export async function getStaticProps() {
     const description = await remark().use(html).process(profile.description)
     const descriptionHtml = description.toString();
 
-    const res3 = await fetch('http://localhost:1337/certifications');
-    const certifications = await res3.json();
+    const certificationsResult = await fetch('http://localhost:1337/certifications');
+    const certifications = _.orderBy(await certificationsResult.json(), ['from_date'], ['desc']);
 
-    const res4 = await fetch('http://localhost:1337/courses');
-    const courses = await res4.json();
+    const coursesResult = await fetch('http://localhost:1337/courses');
+    const courses = _.orderBy(await coursesResult.json(), ['course_date'], ['desc']);
 
     return {
         props: {
