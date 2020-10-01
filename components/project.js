@@ -16,11 +16,7 @@ export default function Project({ project }) {
     return (
         <Card className={classes.root}>
             <CardActionArea href={`/projects/${project.id}`}>
-                <CardMedia
-                    className={classes.media}
-                    image={thumbnailUrl}
-                    title={project.title}
-                />
+                {thumbnailUrl ? (<CardMedia className={classes.media} image={thumbnailUrl} title={project.title} />) : null}
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="h2">{project.title}</Typography>
                     <Typography variant="body2" color="textSecondary" component="p">{project.summary}</Typography>
