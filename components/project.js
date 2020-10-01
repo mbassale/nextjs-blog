@@ -11,7 +11,7 @@ export default function Project({ project }) {
     let thumbnailUrl = null;
     if (firstImage && firstImage.formats) {
         const thumbnailImage = firstImage.formats.small;
-        thumbnailUrl = 'http://localhost:1337' + thumbnailImage.url;
+        thumbnailUrl = process.env.NEXT_PUBLIC_STRAPI_BASE_URL + thumbnailImage.url;
     }
     return (
         <Card className={classes.root}>

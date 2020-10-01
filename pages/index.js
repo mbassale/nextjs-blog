@@ -18,19 +18,19 @@ import Course from "../components/Course";
 
 export async function getStaticProps() {
     // get projects
-    const res = await fetch('http://localhost:1337/projects');
+    const res = await fetch(process.env.NEXT_PUBLIC_STRAPI_BASE_URL + '/projects');
     const projects = await res.json();
 
     // get profile data
-    const res2 = await fetch('http://localhost:1337/profiles/1');
+    const res2 = await fetch(process.env.NEXT_PUBLIC_STRAPI_BASE_URL + '/profiles/1');
     const profile = await res2.json();
     const description = await remark().use(html).process(profile.description)
     const descriptionHtml = description.toString();
 
-    const certificationsResult = await fetch('http://localhost:1337/certifications');
+    const certificationsResult = await fetch(process.env.NEXT_PUBLIC_STRAPI_BASE_URL + '/certifications');
     const certifications = _.orderBy(await certificationsResult.json(), ['from_date'], ['desc']);
 
-    const coursesResult = await fetch('http://localhost:1337/courses');
+    const coursesResult = await fetch(process.env.NEXT_PUBLIC_STRAPI_BASE_URL + '/courses');
     const courses = _.orderBy(await coursesResult.json(), ['course_date'], ['desc']);
 
     return {
@@ -59,7 +59,7 @@ export default function Home({ profile, profileDescriptionHtml, projects, certif
                 <h2 className={utilStyles.headingLg}>Profiles</h2>
                 <List component="nav" aria-label="main mailbox folders">
                     {profile.profile_links.map(profileLink => (
-                        <ListItem button component={Link} href={profileLink.url} target="_blank">
+                        <ListItem key={profileLink.id} button component={Link} href={profileLink.url} target="_blank">
                             <ListItemIcon>
                                 <LinkIcon />
                             </ListItemIcon>

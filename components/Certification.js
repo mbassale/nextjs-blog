@@ -7,7 +7,7 @@ import Link from '@material-ui/core/Link';
 import classes from './Certification.module.css';
 
 export default function Certification({ certification }) {
-    const certificateUrl = certification.certificate_file ? 'http://localhost:1337' + certification.certificate_file.url : null;
+    const certificateUrl = certification.certificate_file ? process.env.NEXT_PUBLIC_STRAPI_BASE_URL + certification.certificate_file.url : null;
     return (
         <Card className={classes.root} variant="outlined">
             <CardContent>

@@ -12,7 +12,7 @@ export default function ProjectImage({ image, onClick }) {
         }
     };
 
-    const imageUrl = 'http://localhost:1337' + image.formats.medium.url;
+    const imageUrl = process.env.NEXT_PUBLIC_STRAPI_BASE_URL + image.formats.medium.url;
     return (
         <React.Fragment>
             <img className={classes.image} src={imageUrl} alt={image.caption} onClick={handleClick}/>

@@ -116,7 +116,7 @@ export default function Project({ project, descriptionHtml }) {
 }
 
 export async function getStaticPaths() {
-    const res = await fetch('http://localhost:1337/projects');
+    const res = await fetch(process.env.NEXT_PUBLIC_STRAPI_BASE_URL + '/projects');
     const projects = await res.json();
     return {
         paths: projects.map(project => {
@@ -131,7 +131,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const res = await fetch('http://localhost:1337/projects/' + params.id);
+    const res = await fetch(process.env.NEXT_PUBLIC_STRAPI_BASE_URL + '/projects/' + params.id);
     const project = await res.json();
     const description = await remark().use(html).process(project.description)
     const descriptionHtml = description.toString();
