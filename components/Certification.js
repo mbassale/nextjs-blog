@@ -7,6 +7,7 @@ import Link from '@material-ui/core/Link';
 import classes from './Certification.module.css';
 
 export default function Certification({ certification }) {
+    const validationUrl = certification.url || null;
     const certificateUrl = certification.certificate_file ? process.env.NEXT_PUBLIC_STRAPI_BASE_URL + certification.certificate_file.url : null;
     return (
         <Card className={classes.root} variant="outlined">
@@ -22,7 +23,7 @@ export default function Certification({ certification }) {
                 </Typography>
             </CardContent>
             <CardActions className={classes.actions}>
-                <Link className={classes.link} href={certification.url} target="_blank" underline="none">Validate</Link>
+                {validationUrl ? (<Link className={classes.link} href={validationUrl} target="_blank" underline="none">Validate</Link>) : null}
                 {certificateUrl ? (<Link className={classes.link} href={certificateUrl} target="_blank" underline="none">Download Certificate</Link>) : null}
             </CardActions>
         </Card>
