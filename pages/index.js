@@ -19,13 +19,15 @@ import Course from "../components/Course";
 export async function getStaticProps() {
     // get projects
     const res = await fetch(process.env.NEXT_PUBLIC_STRAPI_BASE_URL + '/projects');
-    const projects = await res.json();
+    const projects = _.orderBy(await res.json(), ['id'], ['asc']);
 
     // get profile data
     const res2 = await fetch(process.env.NEXT_PUBLIC_STRAPI_BASE_URL + '/profiles/1');
     const profile = await res2.json();
-    const description = await remark().use(html).process(profile.description)
+    const siteTitle = `${profile.first_name} ${profile.last_name}`;
+    const description = await remark().use(html).process(profile.description);
     const descriptionHtml = description.toString();
+    const profileLinks = _.orderBy(profile.profile_links, ['id'], ['asc']);
 
     const certificationsResult = await fetch(process.env.NEXT_PUBLIC_STRAPI_BASE_URL + '/certifications');
     const certifications = _.orderBy(await certificationsResult.json(), ['from_date'], ['desc']);
@@ -35,8 +37,10 @@ export async function getStaticProps() {
 
     return {
         props: {
+            siteTitle,
             profile,
             profileDescriptionHtml: descriptionHtml,
+            profileLinks,
             projects,
             certifications,
             courses
@@ -44,8 +48,15 @@ export async function getStaticProps() {
     };
 }
 
-export default function Home({ profile, profileDescriptionHtml, projects, certifications, courses }) {
-    const siteTitle = `${profile.first_name} ${profile.last_name}`;
+export default function Home({
+                                 siteTitle,
+                                 profile,
+                                 profileDescriptionHtml,
+                                 profileLinks,
+                                 projects,
+                                 certifications,
+                                 courses
+                             }) {
     return (
         <Layout home siteTitle={siteTitle} siteDescription={profile.description}>
             <Head>
@@ -53,17 +64,18 @@ export default function Home({ profile, profileDescriptionHtml, projects, certif
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <section className={utilStyles.headingMd}>
-                <div className={utilStyles.textJustify} dangerouslySetInnerHTML={{ __html: profileDescriptionHtml }} />
+                <div className={utilStyles.textJustify} dangerouslySetInnerHTML={{__html: profileDescriptionHtml}}/>
             </section>
             <section className={utilStyles.headingMd}>
                 <h2 className={utilStyles.headingLg}>Profiles</h2>
                 <List component="nav" aria-label="main mailbox folders">
-                    {profile.profile_links.map(profileLink => (
+                    {profileLinks.map(profileLink => (
                         <ListItem key={profileLink.id} button component={Link} href={profileLink.url} target="_blank">
                             <ListItemIcon>
-                                <LinkIcon />
+                                <LinkIcon/>
                             </ListItemIcon>
-                            <ListItemText className={utilStyles.profileLink} primary={profileLink.title} secondary={profileLink.url} />
+                            <ListItemText className={utilStyles.profileLink} primary={profileLink.title}
+                                          secondary={profileLink.url}/>
                         </ListItem>
                     ))}
                 </List>
@@ -73,7 +85,7 @@ export default function Home({ profile, profileDescriptionHtml, projects, certif
                 <Grid container spacing={3} direction="row" justify="center" alignItems="stretch">
                     {projects.map(project => (
                         <Grid key={project.id} item xs={12} md={6} lg={4}>
-                            <Project project={project} />
+                            <Project project={project}/>
                         </Grid>
                     ))}
                 </Grid>
@@ -83,7 +95,7 @@ export default function Home({ profile, profileDescriptionHtml, projects, certif
                 <Grid container spacing={3} direction="row" justify="center" alignItems="stretch">
                     {certifications.map(certification => (
                         <Grid key={certification.id} item xs={12} md={6} lg={4}>
-                            <Certification certification={certification} />
+                            <Certification certification={certification}/>
                         </Grid>
                     ))}
                 </Grid>
@@ -93,7 +105,7 @@ export default function Home({ profile, profileDescriptionHtml, projects, certif
                 <Grid container spacing={3} direction="row" justify="center" alignItems="stretch">
                     {courses.map(course => (
                         <Grid key={course.id} item xs={12} md={6} lg={4}>
-                            <Course course={course} />
+                            <Course course={course}/>
                         </Grid>
                     ))}
                 </Grid>
