@@ -38,7 +38,7 @@ export default function FullScreenDialog({ image, open, onClose, onNextImage, on
 
     let imageElement = null;
     if (image && image.formats) {
-        const imageUrl = process.env.NEXT_PUBLIC_STRAPI_BASE_URL + image.formats.large.url;
+        const imageUrl = process.env.NEXT_PUBLIC_STRAPI_BASE_URL + (image.formats.large.url || image.formats.medium.url);
         imageElement = (
             <div className={classes.content}>
                 <div className={classes.navigationColumnLeft}>
