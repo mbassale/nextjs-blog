@@ -17,7 +17,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog({ image, open, onClose, onNextImage, onPreviousImage}) {
+export default function FullScreenDialog({image, open, onClose, onNextImage, onPreviousImage}) {
     const handleClose = () => {
         if (onClose) {
             onClose();
@@ -38,18 +38,23 @@ export default function FullScreenDialog({ image, open, onClose, onNextImage, on
 
     let imageElement = null;
     if (image && image.formats) {
-        const imageUrl = process.env.NEXT_PUBLIC_STRAPI_BASE_URL + (image.formats.large.url || image.formats.medium.url);
+        const largeUrl = image.formats.large ? image.formats.large.url : null;
+        const mediumUrl = image.formats.medium ? image.formats.medium.url : null;
+        const smallUrl = image.formats.small ? image.formats.small.url : null;
+        const imageUrl = process.env.NEXT_PUBLIC_STRAPI_BASE_URL + (largeUrl || mediumUrl || smallUrl);
         imageElement = (
             <div className={classes.content}>
                 <div className={classes.navigationColumnLeft}>
-                    <ButtonBase className={[classes.navigationButton, classes.leftNavigationButton].join(' ')} disableTouchRipple={true} onClick={handlePreviousImage}>
-                        <LeftIcon className={classes.leftNavigationIcon} />
+                    <ButtonBase className={[classes.navigationButton, classes.leftNavigationButton].join(' ')}
+                                disableTouchRipple={true} onClick={handlePreviousImage}>
+                        <LeftIcon className={classes.leftNavigationIcon}/>
                     </ButtonBase>
                 </div>
-                <img className={classes.image} src={imageUrl} alt={image.caption} />
+                <img className={classes.image} src={imageUrl} alt={image.caption}/>
                 <div className={classes.navigationColumnRight}>
-                    <ButtonBase className={[classes.navigationButton, classes.rightNavigationButton].join(' ')} disableTouchRipple={true} onClick={handleNextImage}>
-                        <RightIcon className={classes.rightNavigationIcon} />
+                    <ButtonBase className={[classes.navigationButton, classes.rightNavigationButton].join(' ')}
+                                disableTouchRipple={true} onClick={handleNextImage}>
+                        <RightIcon className={classes.rightNavigationIcon}/>
                     </ButtonBase>
                 </div>
             </div>
@@ -61,7 +66,7 @@ export default function FullScreenDialog({ image, open, onClose, onNextImage, on
             <AppBar className={classes.appBar}>
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-                        <CloseIcon />
+                        <CloseIcon/>
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
                         {image ? image.caption : null}
